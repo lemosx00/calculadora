@@ -6,7 +6,7 @@
     --display-text: #2c3e50;
     --btn-num: #7f8c8d;
     --btn-apagar: #d35400;
-    --symbol-opacity: 0.06; /* Opacidade suave para o modo claro */
+    --symbol-opacity: 0.06;
 }
 
 /* Modo Escuro */
@@ -17,7 +17,7 @@ body.dark-mode {
     --display-text: #ffffff;
     --btn-num: #333333;
     --btn-apagar: #8e44ad;
-    --symbol-opacity: 0.04; /* Mais sutil no modo escuro */
+    --symbol-opacity: 0.04;
 }
 
 /* Transições e Estilos Base */
@@ -33,23 +33,21 @@ body {
     min-height: 100vh;
     margin: 0;
     background-color: var(--bg-body);
-    overflow: hidden; /* Evita barras de rolagem por causa da animação */
+    overflow: hidden;
+    /* PROTEÇÃO CONTRA ZOOM: pan-x pan-y permite rolar se necessário, mas bloqueia o zoom de duplo toque */
+    touch-action: pan-x pan-y; 
 }
 
 /* Fundo Animado com Símbolos */
 body::before {
     content: '';
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0; width: 100%; height: 100%;
     z-index: -1;
     pointer-events: none;
-    transition: background-image 0.5s ease; /* Transição suave dos símbolos */
+    transition: background-image 0.5s ease;
     animation: flutuar 80s linear infinite;
     
-    /* Símbolos para o MODO CLARO (Cores escuras) */
     background-image: 
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Ctext x='20' y='50' font-family='Georgia, serif' font-size='40' fill='rgba(0,0,0,0.06)'%3E%2B%3C/text%3E%3Ctext x='100' y='130' font-family='Georgia, serif' font-size='35' fill='rgba(0,0,0,0.06)'%3E%3D%3C/text%3E%3C/svg%3E"),
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Ctext x='150' y='60' font-family='Georgia, serif' font-size='30' fill='rgba(0,0,0,0.06)'%3E%25%3C/text%3E%3Ctext x='50' y='150' font-family='Georgia, serif' font-size='45' fill='rgba(0,0,0,0.06)'%3E%CF%80%3C/text%3E%3C/svg%3E"),
@@ -57,7 +55,6 @@ body::before {
     background-size: 150px 150px, 200px 200px, 180px 180px;
 }
 
-/* Símbolos para o MODO ESCURO (Cores claras) */
 body.dark-mode::before {
     background-image: 
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Ctext x='20' y='50' font-family='Georgia, serif' font-size='40' fill='rgba(255,255,255,0.04)'%3E%2B%3C/text%3E%3Ctext x='100' y='130' font-family='Georgia, serif' font-size='35' fill='rgba(255,255,255,0.04)'%3E%3D%3C/text%3E%3C/svg%3E"),
@@ -65,9 +62,9 @@ body.dark-mode::before {
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Ctext x='30' y='160' font-family='Georgia, serif' font-size='35' fill='rgba(255,255,255,0.04)'%3E%E2%88%9A%3C/text%3E%3Ctext x='120' y='40' font-family='Georgia, serif' font-size='40' fill='rgba(255,255,255,0.04)'%3E%C3%B7%3C/text%3E%3C/svg%3E");
 }
 
-/* Restante do seu CSS (Calculadora, Display, Botões) */
+/* Calculadora e Botões */
 .topo-acoes { display: flex; justify-content: flex-start; margin-bottom: 10px; }
-#theme-toggle { background: transparent; border: none; font-size: 22px; cursor: pointer; }
+#theme-toggle { background: transparent; border: none; font-size: 22px; cursor: pointer; touch-action: manipulation; }
 
 .calculadora {
     width: 95%; max-width: 320px; background-color: var(--bg-calc);
@@ -88,7 +85,11 @@ body.dark-mode::before {
 button {
     height: 55px; border-radius: 8px; border: none; cursor: pointer;
     font-size: 20px; font-weight: bold; border-bottom: 4px solid rgba(0,0,0,0.2);
-    user-select: none; -webkit-tap-highlight-color: transparent;
+    /* PROTEÇÃO CONTRA ZOOM E SELEÇÃO */
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 button:active { transform: translateY(2px); border-bottom-width: 2px; }
@@ -110,15 +111,4 @@ button:hover { filter: brightness(1.2); }
 @keyframes flutuar {
     from { background-position: 0 0; }
     to { background-position: 1000px 1000px; }
-}
-body {
-    /* ... seu código anterior ... */
-    touch-action: manipulation; /* Impede o zoom de toque duplo em toda a página */
-}
-
-button {
-    /* ... seu código anterior ... */
-    touch-action: manipulation; /* Reforça o comportamento nos botões */
-    -webkit-user-select: none;  /* Impede seleção de texto no iOS */
-    user-select: none;           /* Impede seleção de texto no geral */
 }
