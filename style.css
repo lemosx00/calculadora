@@ -111,3 +111,14 @@ button:hover { filter: brightness(1.2); }
     from { background-position: 0 0; }
     to { background-position: 1000px 1000px; }
 }
+body {
+    /* ... seu código anterior ... */
+    touch-action: manipulation; /* Impede o zoom de toque duplo em toda a página */
+}
+
+button {
+    /* ... seu código anterior ... */
+    touch-action: manipulation; /* Reforça o comportamento nos botões */
+    -webkit-user-select: none;  /* Impede seleção de texto no iOS */
+    user-select: none;           /* Impede seleção de texto no geral */
+}
