@@ -1,0 +1,113 @@
+/* Variáveis de Cores */
+:root {
+    --bg-body: #f4f4f4;
+    --bg-calc: #2c3e50;
+    --display-bg: #ecf0f1;
+    --display-text: #2c3e50;
+    --btn-num: #7f8c8d;
+    --btn-apagar: #d35400;
+    --symbol-opacity: 0.06; /* Opacidade suave para o modo claro */
+}
+
+/* Modo Escuro */
+body.dark-mode {
+    --bg-body: #1a1a1a;
+    --bg-calc: #000000;
+    --display-bg: #2c3e50;
+    --display-text: #ffffff;
+    --btn-num: #333333;
+    --btn-apagar: #8e44ad;
+    --symbol-opacity: 0.04; /* Mais sutil no modo escuro */
+}
+
+/* Transições e Estilos Base */
+body, .calculadora, #display, button {
+    transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: var(--bg-body);
+    overflow: hidden; /* Evita barras de rolagem por causa da animação */
+}
+
+/* Fundo Animado com Símbolos */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    transition: background-image 0.5s ease; /* Transição suave dos símbolos */
+    animation: flutuar 80s linear infinite;
+    
+    /* Símbolos para o MODO CLARO (Cores escuras) */
+    background-image: 
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Ctext x='20' y='50' font-family='Georgia, serif' font-size='40' fill='rgba(0,0,0,0.06)'%3E%2B%3C/text%3E%3Ctext x='100' y='130' font-family='Georgia, serif' font-size='35' fill='rgba(0,0,0,0.06)'%3E%3D%3C/text%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Ctext x='150' y='60' font-family='Georgia, serif' font-size='30' fill='rgba(0,0,0,0.06)'%3E%25%3C/text%3E%3Ctext x='50' y='150' font-family='Georgia, serif' font-size='45' fill='rgba(0,0,0,0.06)'%3E%CF%80%3C/text%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Ctext x='30' y='160' font-family='Georgia, serif' font-size='35' fill='rgba(0,0,0,0.06)'%3E%E2%88%9A%3C/text%3E%3Ctext x='120' y='40' font-family='Georgia, serif' font-size='40' fill='rgba(0,0,0,0.06)'%3E%C3%B7%3C/text%3E%3C/svg%3E");
+    background-size: 150px 150px, 200px 200px, 180px 180px;
+}
+
+/* Símbolos para o MODO ESCURO (Cores claras) */
+body.dark-mode::before {
+    background-image: 
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Ctext x='20' y='50' font-family='Georgia, serif' font-size='40' fill='rgba(255,255,255,0.04)'%3E%2B%3C/text%3E%3Ctext x='100' y='130' font-family='Georgia, serif' font-size='35' fill='rgba(255,255,255,0.04)'%3E%3D%3C/text%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Ctext x='150' y='60' font-family='Georgia, serif' font-size='30' fill='rgba(255,255,255,0.04)'%3E%25%3C/text%3E%3Ctext x='50' y='150' font-family='Georgia, serif' font-size='45' fill='rgba(255,255,255,0.04)'%3E%CF%80%3C/text%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Ctext x='30' y='160' font-family='Georgia, serif' font-size='35' fill='rgba(255,255,255,0.04)'%3E%E2%88%9A%3C/text%3E%3Ctext x='120' y='40' font-family='Georgia, serif' font-size='40' fill='rgba(255,255,255,0.04)'%3E%C3%B7%3C/text%3E%3C/svg%3E");
+}
+
+/* Restante do seu CSS (Calculadora, Display, Botões) */
+.topo-acoes { display: flex; justify-content: flex-start; margin-bottom: 10px; }
+#theme-toggle { background: transparent; border: none; font-size: 22px; cursor: pointer; }
+
+.calculadora {
+    width: 95%; max-width: 320px; background-color: var(--bg-calc);
+    padding: 20px; border-radius: 15px; box-shadow: 0px 10px 30px rgba(0,0,0,0.4);
+    box-sizing: border-box; position: relative;
+}
+
+#display {
+    width: 100%; height: 60px; margin-bottom: 15px; font-size: 28px;
+    text-align: right; padding: 10px; box-sizing: border-box;
+    border: none; border-radius: 8px; background: var(--display-bg); color: var(--display-text);
+}
+
+.conteudo { display: flex; gap: 12px; }
+.numeros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; flex-grow: 1; }
+.controles-laterais { display: flex; flex-direction: column; gap: 8px; width: 70px; }
+
+button {
+    height: 55px; border-radius: 8px; border: none; cursor: pointer;
+    font-size: 20px; font-weight: bold; border-bottom: 4px solid rgba(0,0,0,0.2);
+    user-select: none; -webkit-tap-highlight-color: transparent;
+}
+
+button:active { transform: translateY(2px); border-bottom-width: 2px; }
+button:hover { filter: brightness(1.2); }
+
+.btn-num { background: var(--btn-num); color: white; }
+.btn-op { background: #e67e22; color: white; }
+.btn-limpar { background: #e74c3c; color: white; }
+.btn-soma { grid-column: span 2; background: #e67e22; color: white; }
+.btn-apagar { background: var(--btn-apagar); color: white; }
+.btn-igual { background: #27ae60; color: white; flex-grow: 1; }
+
+@media (max-width: 360px) {
+    .calculadora { padding: 15px; }
+    button { height: 50px; font-size: 18px; }
+    #display { font-size: 24px; height: 50px; }
+}
+
+@keyframes flutuar {
+    from { background-position: 0 0; }
+    to { background-position: 1000px 1000px; }
+}
